@@ -1,0 +1,1 @@
+/Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9 /Users/leonbiermann/Desktop/Personal\ Projects/createFlashCards/gui.py

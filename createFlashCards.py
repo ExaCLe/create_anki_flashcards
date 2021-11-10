@@ -1,4 +1,5 @@
 import csv
+
 from bs4 import BeautifulSoup
 import os
 import uuid
@@ -17,6 +18,7 @@ PATH_TO_MEDIA = os.path.join(
 
 
 def extractCards(file, target):
+    print("Extracting")
     soup = BeautifulSoup(file, "html.parser")
     writer = csv.writer(target, delimiter=";")
 
@@ -56,6 +58,7 @@ def extractCards(file, target):
         # write the result to the file
         back = back + highlight_script()
         writer.writerow([front, back])
+        print("Finished")
 
 
 def clear_spaces(text):
@@ -76,10 +79,16 @@ def escape_for_anki(text):
     return result
 
 
-def main():
-    with open("page.html") as file:
-        with open("cards.csv", "w") as target:
+def read_in_cards(path_to_file):
+    print("File Choosen")
+    with open(path_to_file) as file:
+        with open("/Users/leonbiermann/Desktop/Personal Projects/createFlashCards/cards.csv", "w") as target:
             extractCards(file, target)
+            print("Finished")
+
+
+def main():
+    read_in_cards("page.html")
 
 
 if __name__ == "__main__":
