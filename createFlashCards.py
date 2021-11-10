@@ -17,7 +17,13 @@ PATH_TO_MEDIA = os.path.join(
 )
 
 
-def extractCards(file, target):
+def extractCards(file, target, path_to_file):
+    path_parts = path_to_file.split("/")
+    if len(path_parts) > 1: 
+        path_parts = path_parts[0:-1]
+        path = "/".join(path_parts)
+    else: 
+        path = ""
     print("Extracting")
     soup = BeautifulSoup(file, "html.parser")
     writer = csv.writer(target, delimiter=";")
@@ -51,7 +57,7 @@ def extractCards(file, target):
             )
         back += "</pre>"
         for image in images:
-            current_path = os.path.abspath(clear_spaces(image["src"]))
+            current_path = os.path.abspath(os.path.join(path, clear_spaces(image["src"])))
             id = str(uuid.uuid4())
             os.rename(current_path, os.path.join(PATH_TO_MEDIA, id + ".png"))
             back = back + "<img src='" + id + ".png'" + "/>"
@@ -83,7 +89,7 @@ def read_in_cards(path_to_file):
     print("File Choosen")
     with open(path_to_file) as file:
         with open("/Users/leonbiermann/Desktop/Personal Projects/createFlashCards/cards.csv", "w") as target:
-            extractCards(file, target)
+            extractCards(file, target, path_to_file)
             print("Finished")
 
 
